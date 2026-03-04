@@ -152,6 +152,8 @@
         <p class="app-desc">Deep cleaning and RAM management for high-end gaming performance.</p>
         <a href="رابط_التحميل_هنا" class="download-btn">Download Now</a>
     </div>
+<div id="pagination" style="margin: 40px 0; display: flex; justify-content: center; gap: 10px; align-items: center;">
+    </div>
 
 </div>
 <section style="max-width: 900px; margin: 50px auto; padding: 20px; border-top: 1px solid #2d334a;">
@@ -185,7 +187,57 @@
 </footer>
 
 <script>
-  //قيد التطوير
+const appsPerPage = 6; // عدد التطبيقات في كل صفحة
+let currentPage = 1;
+
+function displayApps(page) {
+    const apps = document.querySelectorAll('.app-card');
+    const totalPages = Math.ceil(apps.length / appsPerPage);
+    
+    // إخفاء الكل أولاً
+    apps.forEach((app, index) => {
+        app.style.display = 'none';
+        // إظهار التطبيقات التابعة للصفحة المختارة فقط
+        if (index >= (page - 1) * appsPerPage && index < page * appsPerPage) {
+            app.style.display = 'block';
+        }
+    });
+
+    setupPagination(totalPages);
+}
+
+function setupPagination(totalPages) {
+    const paginationDiv = document.getElementById('pagination');
+    paginationDiv.innerHTML = ''; // تنظيف الشريط
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        btn.style.cssText = `
+            padding: 8px 16px;
+            border: 1px solid var(--primary-color);
+            background: ${i === currentPage ? 'var(--primary-color)' : 'transparent'};
+            color: ${i === currentPage ? 'black' : 'var(--primary-color)'};
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        `;
+        
+        btn.addEventListener('click', () => {
+            currentPage = i;
+            displayApps(currentPage);
+            window.scrollTo(0, 0); // العودة لأعلى الصفحة عند التنقل
+        });
+        paginationDiv.appendChild(btn);
+    }
+}
+
+// تشغيل النظام فور تحميل الصفحة
+window.addEventListener('load', () => {
+    displayApps(currentPage);
+});
+ 
+    //قيد التطوير
 </script>
     
 
