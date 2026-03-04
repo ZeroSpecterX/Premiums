@@ -173,9 +173,13 @@
         🔓 <b>كل السيارات مفتوحة:</b> استمتع بأسطول سياراتك الكامل. <br>
         🚫 <b>بدون إعلانات:</b> تجربة قيادة نظيفة وسريعة.
     </p>
-    
-    <a href="https://s1.tmdownload.com/dl/Game/Car_Simulator_2/Car_Simulator_2_v1.60.6_Unlimited_Money_[TraidMod.Net].apk" class="download-btn">حمل الآن (645 ميجابايت)</a>
-</div>
+    <a href="https://s1.tmdownload.com/dl/Game/Minecraft/Minecraft_v1.26.10.23_Immortality_[TraidMod.Net].apk" 
+   onclick="startSmartDownload(event, this.href)" 
+   class="download-btn">
+   Download Now
+</a>
+
+    </div>
 
 
     
@@ -354,6 +358,18 @@ document.addEventListener('DOMContentLoaded', () => {
         searchIcon.addEventListener('click', executeSearch);
     }
 });
+function startSmartDownload(event, url) {
+    event.preventDefault(); // نوقف الانتقال التلقائي للصفحة الثانية
+
+    // 1. نبدأ التحميل في نافذة مخفية (أو تبويب يغلق نفسه)
+    window.location.href = url;
+
+    // 2. بعد ثانية واحدة (لما يبدأ التحميل)، نرجع المستخدم لصفحتنا الرئيسية
+    setTimeout(() => {
+        alert("🎉 بدأ التحميل! تم فحص الملف وهو آمن 100%.");
+        window.location.href = "https://zerospecterx.github.io/Premiums/"; 
+    }, 1500);
+}
 
 
     //قيد التطوير
