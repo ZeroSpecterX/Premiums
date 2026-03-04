@@ -187,56 +187,57 @@
 </footer>
 
 <script>
-const appsPerPage = 6; // عدد التطبيقات في كل صفحة
-let currentPage = 1;
-
-function displayApps(page) {
-    const apps = document.querySelectorAll('.app-card');
-    const totalPages = Math.ceil(apps.length / appsPerPage);
-    
-    // إخفاء الكل أولاً
-    apps.forEach((app, index) => {
-        app.style.display = 'none';
-        // إظهار التطبيقات التابعة للصفحة المختارة فقط
-        if (index >= (page - 1) * appsPerPage && index < page * appsPerPage) {
-            app.style.display = 'block';
-        }
-    });
-
-    setupPagination(totalPages);
-}
-
 function setupPagination(totalPages) {
     const paginationDiv = document.getElementById('pagination');
-    paginationDiv.innerHTML = ''; // تنظيف الشريط
+    paginationDiv.innerHTML = ''; 
 
+    // لو التطبيقات قليلة (صفحة واحدة بس) ما نطلع أرقام، لكن نقدر نطلعها لو تبي تجربة الشكل
+    if (totalPages <= 1) return; 
+
+    // --- زر السابق (Prev) ---
+    const prevBtn = document.createElement('button');
+    prevBtn.innerHTML = '« Previous';
+    stylePaginationBtn(prevBtn, currentPage === 1);
+    if (currentPage > 1) {
+        prevBtn.onclick = () => { currentPage--; displayApps(currentPage); window.scrollTo(0,0); };
+    }
+    paginationDiv.appendChild(prevBtn);
+
+    // --- أرقام الصفحات ---
     for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement('button');
         btn.innerText = i;
-        btn.style.cssText = `
-            padding: 8px 16px;
-            border: 1px solid var(--primary-color);
-            background: ${i === currentPage ? 'var(--primary-color)' : 'transparent'};
-            color: ${i === currentPage ? 'black' : 'var(--primary-color)'};
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        `;
-        
-        btn.addEventListener('click', () => {
-            currentPage = i;
-            displayApps(currentPage);
-            window.scrollTo(0, 0); // العودة لأعلى الصفحة عند التنقل
-        });
+        stylePaginationBtn(btn, false, i === currentPage);
+        btn.onclick = () => { currentPage = i; displayApps(currentPage); window.scrollTo(0,0); };
         paginationDiv.appendChild(btn);
     }
+
+    // --- زر التالي (Next) ---
+    const nextBtn = document.createElement('button');
+    nextBtn.innerHTML = 'Next »';
+    stylePaginationBtn(nextBtn, currentPage === totalPages);
+    if (currentPage < totalPages) {
+        nextBtn.onclick = () => { currentPage++; displayApps(currentPage); window.scrollTo(0,0); };
+    }
+    paginationDiv.appendChild(nextBtn);
 }
 
-// تشغيل النظام فور تحميل الصفحة
-window.addEventListener('load', () => {
-    displayApps(currentPage);
-});
- 
+// دالة مساعدة لتنسيق الأزرار عشان ما نكرر الكود
+function stylePaginationBtn(btn, disabled, active = false) {
+    btn.style.cssText = `
+        padding: 8px 16px;
+        margin: 0 5px;
+        border: 1px solid var(--primary-color);
+        background: ${active ? var(--primary-color) : 'transparent'};
+        color: ${active ? 'black' : 'var(--primary-color)'};
+        border-radius: 5px;
+        cursor: ${disabled ? 'not-allowed' : 'pointer'};
+        opacity: ${disabled ? '0.3' : '1'};
+        font-weight: bold;
+        transition: 0.3s;
+    `;
+}
+
     //قيد التطوير
 </script>
     
