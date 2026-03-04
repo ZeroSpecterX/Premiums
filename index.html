@@ -275,13 +275,26 @@ function stylePaginationBtn(btn, disabled, active = false) {
 
 const searchInput = document.getElementById('searchInput');
 const searchIcon = document.getElementById('searchIcon');
-const noResults = document.getElementById('noResults');
-const container = document.querySelector('.container');
 
+// 1. البحث عند الضغط على Enter من الكيبورد
+searchInput.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault(); // منع الصفحة من التحديث
+        executeSearch();
+    }
+});
+
+// 2. البحث عند الضغط على أيقونة العدسة
+searchIcon.addEventListener('click', function() {
+    executeSearch();
+});
+
+// 3. دالة البحث الأساسية (تأكد أنها مطابقة لهذا الاسم)
 function executeSearch() {
-    const filter = searchInput.value.toLowerCase();
+    const filter = searchInput.value.toLowerCase().trim();
     const apps = document.querySelectorAll('.app-card');
     const paginationDiv = document.getElementById('pagination');
+    const noResults = document.getElementById('noResults');
     let foundCount = 0;
 
     if (filter === "") {
@@ -291,10 +304,15 @@ function executeSearch() {
         return;
     }
 
+    // إخفاء الترقيم أثناء البحث
     paginationDiv.style.display = 'none';
+
     apps.forEach(app => {
+        // البحث في العنوان والوصف لزيادة الدقة
         const title = app.querySelector('.app-title').innerText.toLowerCase();
-        if (title.includes(filter)) {
+        const desc = app.querySelector('.app-desc').innerText.toLowerCase();
+        
+        if (title.includes(filter) || desc.includes(filter)) {
             app.style.display = 'block';
             foundCount++;
         } else {
@@ -302,21 +320,19 @@ function executeSearch() {
         }
     });
 
-    // إظهار رسالة "غير موجود" إذا لم يجد شيئاً
+    // إظهار رسالة "غير موجود" أو النزول للنتائج
     if (foundCount === 0) {
         noResults.style.display = 'block';
     } else {
         noResults.style.display = 'none';
-        // القفز تلقائياً لأول نتيجة بحث
-        window.scrollTo({ top: container.offsetTop - 20, behavior: 'smooth' });
+        // القفز لأول نتيجة بحث بسلاسة
+        const firstVisibleApp = Array.from(apps).find(a => a.style.display === 'block');
+        if (firstVisibleApp) {
+            firstVisibleApp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     }
 }
 
-// البحث عند الكتابة
-searchInput.addEventListener('input', executeSearch);
-
-// البحث عند الضغط على أيقونة العدسة
-searchIcon.addEventListener('click', executeSearch);
 
 
     //قيد التطوير
