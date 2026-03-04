@@ -127,6 +127,13 @@
     <p>Global Trusted Software Distribution Center</p>
 </header>
 
+    <div style="max-width: 600px; margin: 20px auto; padding: 0 20px;">
+    <input type="text" id="searchInput" placeholder="Search for games or apps..." 
+           style="width: 100%; padding: 12px 20px; border-radius: 25px; border: 1px solid var(--primary-color); 
+                  background: #1c1f2b; color: white; font-size: 16px; outline: none; box-shadow: 0 0 10px rgba(0,123,255,0.2);">
+</div>
+
+
 <div class="container">
 
 <div class="app-card">
@@ -254,6 +261,35 @@ function stylePaginationBtn(btn, disabled, active = false) {
         transition: 0.3s;
     `;
 }
+
+const searchInput = document.getElementById('searchInput');
+
+searchInput.addEventListener('input', function() {
+    const filter = this.value.toLowerCase();
+    const apps = document.querySelectorAll('.app-card');
+    const paginationDiv = document.getElementById('pagination');
+
+    if (filter === "") {
+        // إذا كان البحث فارغاً، نرجع لنظام الصفحات العادي
+        currentPage = 1;
+        displayApps(currentPage);
+        paginationDiv.style.display = 'flex';
+    } else {
+        // إذا كان المستخدم يكتب، نبحث في كل الكروت ونخفي نظام الصفحات مؤقتاً
+        paginationDiv.style.display = 'none';
+        apps.forEach(app => {
+            const title = app.querySelector('.app-title').innerText.toLowerCase();
+            const desc = app.querySelector('.app-desc').innerText.toLowerCase();
+            
+            if (title.includes(filter) || desc.includes(filter)) {
+                app.style.display = 'block'; // إظهار إذا وجد تطابق
+            } else {
+                app.style.display = 'none'; // إخفاء إذا لم يوجد
+            }
+        });
+    }
+});
+    
 
     //قيد التطوير
 </script>
