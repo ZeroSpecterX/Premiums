@@ -6,121 +6,152 @@
     <meta name="description" content="موقع Premiums يوفر لك أحدث التطبيقات والألعاب المهكرة بمميزات VIP مجاناً. استمتع بتجربة البرامج المدفوعة بدون إعلانات وبأحدث الإصدارات لعام 2026.">
     <title>Nexus Core | Premium Software Distribution - تحميل تطبيقات وألعاب مهكرة VIP مجاناً | Mod APK</title>
 
-              <style>
-        /* الأساسيات */
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
-            --dark-bg: #0f111a;
-            --card-bg: #1c1f2b;
-            --text-main: #e1e1e1;
-        }
 
-        body {
-            background-color: var(--dark-bg);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+    /* استيراد خطوط احترافية */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Tajawal:wght@400;700&display=swap');
 
-        /* رأس الصفحة */
-        header {
-            background-color: var(--card-bg);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--primary-color);
-        }
+    :root {
+        --primary-gradient: linear-gradient(135deg, #007aff, #00d4ff);
+        --dark-bg: #050505; /* أسود أعمق للفخامة */
+        --card-bg: rgba(28, 31, 43, 0.7);
+        --border-color: rgba(255, 255, 255, 0.08);
+        --text-main: #ffffff;
+        --text-dim: #a1a1a6; /* رمادي أبل الشهير */
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-            letter-spacing: 2px;
-            color: var(--primary-color);
-        }
+    body {
+        background-color: var(--dark-bg);
+        color: var(--text-main);
+        font-family: 'Tajawal', 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.5;
+    }
 
-        header p {
-            font-size: 14px;
-            color: var(--secondary-color);
-        }
+    /* هيدر عصري شفاف */
+    header {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background: rgba(15, 17, 26, 0.8);
+        padding: 40px 20px;
+        text-align: center;
+        border-bottom: 1px solid var(--border-color);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
 
-        /* حاوية التطبيقات */
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
+    header h1 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 700;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -1px;
+    }
 
-        /* كرت التطبيق */
-        .app-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid #2d334a;
-            transition: all 0.3s ease;
-        }
+    /* حاوية التطبيقات - Grid نظامي */
+    .container {
+        max-width: 1100px;
+        margin: 50px auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+    }
 
-        .app-card:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
+    /* كرت التطبيق - تصميم زجاجي */
+    .app-card {
+        background: var(--card-bg);
+        border-radius: 24px;
+        padding: 24px;
+        border: 1px solid var(--border-color);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        backdrop-filter: blur(10px);
+    }
 
-        .app-icon {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-            border-radius: 18px;
-        }
+    .app-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(0, 122, 255, 0.5);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        background: rgba(35, 38, 50, 0.9);
+    }
 
-        .app-title {
-            font-size: 20px;
-            margin: 10px 0;
-        }
+    .app-icon {
+        width: 90px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 22px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
 
-        .app-version {
-            font-size: 12px;
-            color: #28a745; /* لون أخضر رسمي */
-            background: rgba(40, 167, 69, 0.1);
-            padding: 2px 10px;
-            border-radius: 10px;
-            display: inline-block;
-        }
+    .app-title {
+        font-size: 19px;
+        font-weight: 600;
+        margin: 5px 0;
+        color: #fff;
+    }
 
-        .app-desc {
-            font-size: 14px;
-            color: var(--secondary-color);
-            margin: 15px 0;
-            line-height: 1.6;
-        }
+    /* الإصدار بشكل كبسولة احترافية */
+    .app-version {
+        font-size: 11px;
+        font-weight: 600;
+        color: #30d158;
+        background: rgba(48, 209, 88, 0.1);
+        padding: 4px 12px;
+        border-radius: 20px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
 
-        /* أزرار التحميل */
-        .download-btn {
-            display: block;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+    /* الوصف بالخط الإنجليزي الصغير */
+    .app-desc {
+        font-family: 'Inter', sans-serif; /* خط إنجليزي رسمي */
+        font-size: 12.5px;
+        color: var(--text-dim);
+        margin-bottom: 25px;
+        text-align: center;
+        min-height: 40px;
+        font-weight: 300;
+        line-height: 1.4;
+    }
 
-        .download-btn:hover {
-            background-color: #0056b3;
-        }
+    /* زر التحميل على شكل أزرار iOS */
+    .download-btn {
+        width: 100%;
+        background: var(--primary-gradient);
+        color: white;
+        text-decoration: none;
+        padding: 12px 0;
+        border-radius: 14px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: 0.3s;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+    }
 
-        footer {
-            text-align: center;
-            padding: 40px;
-            color: var(--secondary-color);
-            font-size: 12px;
-        }
-              </style>
+    .download-btn:hover {
+        opacity: 0.9;
+        box-shadow: 0 6px 20px rgba(0, 122, 255, 0.5);
+    }
+
+    footer {
+        padding: 60px;
+        opacity: 0.5;
+        font-size: 11px;
+        letter-spacing: 1px;
+    }
+</style>
+
+
+
 </head>
 <body>
 
