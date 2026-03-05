@@ -5,7 +5,8 @@
     <meta name="keywords" content="تطبيقات مهكرة, ألعاب مهكرة, Mod APK, Premium, VIP, تحميل مجاني, برامج مدفوعة">
     <meta name="description" content="موقع Premiums يوفر لك أحدث التطبيقات والألعاب المهكرة بمميزات VIP مجاناً. استمتع بتجربة البرامج المدفوعة بدون إعلانات وبأحدث الإصدارات لعام 2026.">
     <title>Nexus Core | Premium Software Distribution - تحميل تطبيقات وألعاب مهكرة VIP مجاناً | Mod APK</title>
-    <style>
+
+              <style>
         /* الأساسيات */
         :root {
             --primary-color: #007bff;
@@ -43,130 +44,31 @@
             color: var(--secondary-color);
         }
 
-/* حاوية التطبيقات: هنا يكمن السر */
-.container {
-    max-width: 1200px;
-    margin: 15px auto;
-    padding: 10px;
-    display: grid;
-    /* يضمن ظهور كرتين بجانب بعض حتى في أصغر الشاشات */
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 12px; /* مسافة بسيطة وأنيقة بين الكروت */
-}
+        /* حاوية التطبيقات */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
 
-/* الكرت المطور: أصغر وأكثر تناسقاً */
-.app-card {
-    background-color: var(--card-bg);
-    border-radius: 15px;
-    padding: 12px 8px; /* تقليل الحشو ليعطي مساحة للمحتوى */
-    text-align: center;
-    border: 1px solid #2d334a;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: auto;
-    transition: 0.3s;
-}
+        /* كرت التطبيق */
+        .app-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #2d334a;
+            transition: all 0.3s ease;
+        }
 
-/* الأيقونة: سر الأناقة */
-.app-icon {
-    width: 70px; /* حجم مثالي للكرت الصغير */
-    height: 70px;
-    margin: 0 auto 10px auto;
-    border-radius: 16px;
-    object-fit: cover;
-}
-
-/* العناوين: منع التشوه */
-.app-title {
-    font-size: 14px; /* تصغير الخط ليناسب العمودين */
-    margin: 5px 0;
-    font-weight: bold;
-    color: #fff;
-    /* إجبار النص على البقاء في سطرين فقط عشان ما يخرب طول الكرت */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-height: 35px;
-}
-
-/* الوصف: جعله خفيفاً */
-.app-desc {
-    font-size: 10px; /* خط صغير مثل المواقع الاحترافية */
-    line-height: 1.3;
-    color: var(--secondary-color);
-    margin-bottom: 10px;
-    /* إخفاء الوصف الطويل في الجوال للحفاظ على التناسق */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-/* أزرار التحميل: تناسب الكرت الصغير */
-.download-btn {
-    font-size: 12px;
-    padding: 8px;
-    border-radius: 8px;
-}
-
-/* للكمبيوتر: يرجع 4 أو 5 كروت في السطر */
-@media (min-width: 768px) {
-    .container {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 20px;
-    }
-    .app-icon { width: 90px; height: 90px; }
-    .app-title { font-size: 18px; }
-}
-
-
-/* تصغير الأيقونة لتناسب العرض الجديد */
-.app-icon {
-    width: 65px; 
-    height: 65px;
-    margin: 0 auto 10px auto;
-    border-radius: 15px;
-}
-
-.app-title {
-    font-size: 15px; /* تصغير الخط قليلاً */
-    margin: 5px 0;
-    font-weight: bold;
-    /* منع النص من النزول لسطر ثالث وتشويه المنظر */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.app-version {
-    font-size: 10px;
-    padding: 2px 8px;
-}
-
-.app-desc {
-    font-size: 11px; /* تصغير الوصف ليكون مثل المواقع الرسمية */
-    line-height: 1.4;
-    margin: 10px 0;
-}
-
-.download-btn {
-    font-size: 13px;
-    padding: 10px;
-}
-
-/* --- تعديل للكمبيوتر (عشان ما تظل عمودين وتصير 4 أعمدة) --- */
-@media (min-width: 768px) {
-    .container {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 25px;
-    }
-    .app-icon { width: 80px; height: 80px; }
-    .app-title { font-size: 18px; }
-}
-   
+        .app-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
 
         .app-icon {
             width: 80px;
@@ -218,7 +120,7 @@
             color: var(--secondary-color);
             font-size: 12px;
         }
-    </style>
+              </style>
 </head>
 <body>
 
