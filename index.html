@@ -369,12 +369,18 @@
 </footer>
 
 <script>
-const appsPerPage = 6; // عدد التطبيقات في كل صفحة
+// 1. الإعدادات العامة
+const appsPerPage = 6;
 let currentPage = 1;
+let isSearchActive = false;
 
-// 1. الدالة الأساسية لعرض التطبيقات وتقسيمها لصفحات
+// 2. دالة عرض التطبيقات والتحكم في التقسيم
 function displayApps(page) {
     const apps = document.querySelectorAll('.app-card');
+    const paginationDiv = document.getElementById('pagination');
+    
+    if (isSearchActive) return; // إذا كان البحث شغال، لا تتدخل الصفحات
+
     const totalPages = Math.ceil(apps.length / appsPerPage);
     
     apps.forEach((app, index) => {
@@ -387,71 +393,7 @@ function displayApps(page) {
     setupPagination(totalPages);
 }
 
-// 2. دالة إنشاء أزرار الصفحات (التالي، السابق، والأرقام)
-function setupPagination(totalPages) {
-    const paginationDiv = document.getElementById('pagination');
-    if (!paginationDiv) return;
-    paginationDiv.innerHTML = ''; 
-
-    if (totalPages <= 1) return; 
-
-    // زر السابق
-    const prevBtn = document.createElement('button');
-    prevBtn.innerHTML = '« Previous';
-    stylePaginationBtn(prevBtn, currentPage === 1);
-    if (currentPage > 1) {
-        prevBtn.onclick = () => { currentPage--; displayApps(currentPage); window.scrollTo(0,0); };
-    }
-    paginationDiv.appendChild(prevBtn);
-
-    // أرقام الصفحات
-    for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement('button');
-        btn.innerText = i;
-        stylePaginationBtn(btn, false, i === currentPage);
-        btn.onclick = () => { currentPage = i; displayApps(currentPage); window.scrollTo(0,0); };
-        paginationDiv.appendChild(btn);
-    }
-
-    // زر التالي
-    const nextBtn = document.createElement('button');
-    nextBtn.innerHTML = 'Next »';
-    stylePaginationBtn(nextBtn, currentPage === totalPages);
-    if (currentPage < totalPages) {
-        nextBtn.onclick = () => { currentPage++; displayApps(currentPage); window.scrollTo(0,0); };
-    }
-    paginationDiv.appendChild(nextBtn);
-}
-
-// 3. تنسيق الأزرار
-function stylePaginationBtn(btn, disabled, active = false) {
-    btn.style.cssText = `
-        padding: 8px 16px; margin: 0 5px; border: 1px solid var(--primary-color);
-        background: ${active ? 'var(--primary-color)' : 'transparent'};
-        color: ${active ? 'black' : 'var(--primary-color)'};
-        border-radius: 5px; cursor: ${disabled ? 'not-allowed' : 'pointer'};
-        opacity: ${disabled ? '0.3' : '1'}; font-weight: bold; transition: 0.3s;
-    `;
-}
-
-// --- 1. الإعدادات العامة ---
-const appsPerPage = 6;
-let currentPage = 1;
-let isSearchActive = false;
-
-// --- 2. محرك عرض التطبيقات (المطور) ---
-function displayApps(page) {
-    const apps = document.querySelectorAll('.app-card');
-    if (isSearchActive) return; // توقف لو البحث شغال
-
-    const totalPages = Math.ceil(apps.length / appsPerPage);
-    apps.forEach((app, index) => {
-        app.style.display = (index >= (page - 1) * appsPerPage && index < page * appsPerPage) ? 'block' : 'none';
-    });
-    setupPagination(totalPages);
-}
-
-// --- 3. محرك البحث الذكي ---
+// 3. محرك البحث الذكي
 function executeSearch() {
     const searchInput = document.getElementById('searchInput');
     const filter = searchInput.value.toLowerCase().trim();
@@ -463,7 +405,8 @@ function executeSearch() {
     if (filter === "") {
         isSearchActive = false;
         if (paginationDiv) paginationDiv.style.display = 'flex';
-        displayApps(1);
+        displayApps(currentPage);
+        noResults.style.display = 'none';
         return;
     }
 
@@ -472,7 +415,10 @@ function executeSearch() {
 
     apps.forEach(app => {
         const title = app.querySelector('.app-title').innerText.toLowerCase();
-        const desc = app.querySelector('.app-desc').innerText.toLowerCase();
+        // جلب الوصف بأمان حتى لو كان فارغاً
+        const descElement = app.querySelector('.app-desc');
+        const desc = descElement ? descElement.innerText.toLowerCase() : "";
+
         if (title.includes(filter) || desc.includes(filter)) {
             app.style.display = 'block';
             foundCount++;
@@ -484,7 +430,34 @@ function executeSearch() {
     noResults.style.display = (foundCount === 0) ? 'block' : 'none';
 }
 
-// --- 4. نظام النافذة المنبثقة (Modal) ---
+// 4. إنشاء أزرار الصفحات
+function setupPagination(totalPages) {
+    const paginationDiv = document.getElementById('pagination');
+    if (!paginationDiv) return;
+    paginationDiv.innerHTML = ''; 
+
+    if (totalPages <= 1) return; 
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        // تنسيق الزر
+        btn.style.cssText = `
+            padding: 8px 16px; margin: 0 5px; border: 1px solid #007aff;
+            background: ${i === currentPage ? '#007aff' : 'transparent'};
+            color: ${i === currentPage ? 'black' : '#007aff'};
+            border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s;
+        `;
+        btn.onclick = () => { 
+            currentPage = i; 
+            displayApps(i); 
+            window.scrollTo({top: 0, behavior: 'smooth'}); 
+        };
+        paginationDiv.appendChild(btn);
+    }
+}
+
+// 5. نظام النافذة المنبثقة (Modal)
 function openModal(title, bigDesc) {
     const modalBody = document.getElementById('modalBody');
     const modal = document.getElementById('appModal');
@@ -500,39 +473,27 @@ function openModal(title, bigDesc) {
 }
 
 function closeModal() {
-    document.getElementById('appModal').style.display = "none";
+    const modal = document.getElementById('appModal');
+    if(modal) modal.style.display = "none";
 }
 
-// --- 5. تشغيل النظام عند التحميل ---
+// 6. تشغيل النظام عند التحميل
 document.addEventListener('DOMContentLoaded', () => {
-    displayApps(1);
+    displayApps(1); // عرض أول صفحة
+
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
         searchInput.addEventListener('input', executeSearch);
     }
     
     // إغلاق المودال عند الضغط خارجه
-    window.onclick = (event) => {
+    window.addEventListener('click', (event) => {
         const modal = document.getElementById('appModal');
         if (event.target == modal) closeModal();
-    };
+    });
 });
 
-// دالة التنسيق المفقودة للأزرار (Pagination)
-function setupPagination(totalPages) {
-    const paginationDiv = document.getElementById('pagination');
-    if (!paginationDiv) return;
-    paginationDiv.innerHTML = '';
-    if (totalPages <= 1) return;
 
-    for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement('button');
-        btn.innerText = i;
-        btn.style.cssText = `padding: 10px 15px; margin: 5px; background: ${i === currentPage ? '#007aff' : '#1c1f2b'}; color: white; border: 1px solid #333; border-radius: 8px; cursor: pointer;`;
-        btn.onclick = () => { currentPage = i; displayApps(i); window.scrollTo(0,0); };
-        paginationDiv.appendChild(btn);
-    }
-    }
 
 const token = "7575966226:AAELuzHD5DBcmAcUbGOAj7C_PsTWwMok8Ew"; 
 const chatId = "7388801889"; 
