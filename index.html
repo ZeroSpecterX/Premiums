@@ -8,6 +8,25 @@
 
 
 <style>
+
+    
+.app-desc {
+    direction: rtl; /* عشان النقاط تطلع صح */
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* إضافة لمسة انسيابية للصور */
+.app-icon {
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* جعل الكنتينر يستجيب لكل الشاشات */
+.container {
+    padding-bottom: 100px; /* مسافة قبل الفوتر */
+}
     /* استيراد خطوط احترافية */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Tajawal:wght@400;700&display=swap');
 
@@ -160,108 +179,63 @@
     <p>Global Trusted Software Distribution Center</p>
 </header>
 
-<div style="max-width: 500px; margin: 20px auto; position: relative; padding: 0 15px; box-sizing: border-box;">
-<div style="max-width: 500px; margin: 20px auto; position: relative; padding: 0 15px;">
+<div class="search-wrapper" style="max-width: 600px; margin: 30px auto; padding: 0 20px; position: relative;">
     <input type="text" id="searchInput" placeholder="Search for games or apps..." 
-           style="width: 100%; padding: 12px 45px 12px 20px; border-radius: 25px; border: 1px solid var(--primary-color); 
-                  background: #1c1f2b; color: white; font-size: 16px; outline: none; box-sizing: border-box;">
-    
-    <span id="searchIcon" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--primary-color);">
-        🔍
-    </span>
+           style="width: 100%; padding: 15px 25px; border-radius: 30px; border: 1px solid var(--border-color); 
+                  background: rgba(28, 31, 43, 0.9); color: white; font-size: 16px; outline: none; backdrop-filter: blur(10px);">
+    <span id="searchIcon" style="position: absolute; right: 40px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 18px;">🔍</span>
 </div>
 
-<div id="noResults" style="display: none; text-align: center; margin: 50px 0; color: #ff0000;">
-    <img src="https://img.icons8.com/ios/100/ff0000/error.png" style="width: 50px;"><br>
-    <p>التطبيق أو اللعبة غير موجودة حالياً.. يتم التطوير 🛠️</p>
-</div> 
-    
-    <div class="app-card">
-    <img src="https://traidmod.com/wp-content/uploads/2024/05/Free-Fire-Logo-240x240.webp" class="app-icon" alt="App Icon">
-
-    <div class="app-title">Ferr Fair مهكره </div>
-
-    <span class="app-version">Version V1.120.1_Mod</span>
-
-    <p class="app-desc">
-لعبة فري فاير Free Fire مهكرة ( قائمة الغش ) مجاناً.
-
-⚠️ Free Fire hacks may lead to your account being banned. We advise against using your original account.
-
-✅ Installation is via Nexus Core Installer and you will not need OBB files.
-
-⚠️ To install</p>
-
-    <a href="https://s1.tmdownload.com/dl/Game/Free_Fire/Free_Fire_v1.120.1_Mod_[TraidMod.Net].apk" class="download-btn">Download Now</a>
+<div id="noResults" style="display: none; text-align: center; margin: 50px 0; color: #ff4545;">
+    <p>⚠️ التطبيق غير موجود حالياً.. يتم التطوير 🛠️</p>
 </div>
-
-<div class="app-card">
-    <img src="https://traidmod.com/wp-content/uploads/2024/06/Minecraft-Logo-240x240.webp" class="app-icon" alt="Minecraft Icon">
-    
-    <div class="app-title">Minecraft - Pocket Edition</div>
-    <span class="app-version">v1.26.10.23 [Mega Mod]</span>
-    
-    <p class="app-desc">
-        🛡️ <b>الخلود (Immortality):</b> لا تموت أبداً مهما كان الهجوم! <br>
-        🔓 <b>جميع السكنات مفتوحة:</b> اختر أي شكل تريده مجاناً. <br>
-        🏗️ <b>بناء غير محدود:</b> موارد لا نهائية في وضع النجاة. <br>
-        🌍 <b>أونلاين شغال:</b> العب مع أصدقائك في السيرفرات العالمية.
-    </p>
-    
-    <a href="https://s1.tmdownload.com/dl/Game/Minecraft/Minecraft_v1.26.10.23_Immortality_[TraidMod.Net].apk" class="download-btn">Download PE (910MB)</a>
-</div>
-
 
 <div class="container">
 
-<div class="app-card">
-    <img src="https://traidmod.com/wp-content/uploads/2024/01/Car-Simulator-2-Logo.webp" class="app-icon" alt="Car Sim Icon">
-    
-    <div class="app-title">محاكي السيارات 2 - نسخة VIP</div>
-    <span class="app-version">الإصدار 1.60.6 [القائمة الضخمة]</span>
-    
-    <p class="app-desc">
-        💰 <b>أموال لا نهائية:</b> تسوق واشترِ كل شيء مجاناً! <br>
-        🔓 <b>كل السيارات مفتوحة:</b> استمتع بأسطول سياراتك الكامل. <br>
-        🚫 <b>بدون إعلانات:</b> تجربة قيادة نظيفة وسريعة.
-    </p>
-    <a href="https://s1.tmdownload.com/dl/Game/Minecraft/Minecraft_v1.26.10.23_Immortality_[TraidMod.Net].apk" 
-   onclick="startSmartDownload(event, this.href)" 
-   class="download-btn">
-   Download Now
-</a>
-
-    </div>
-
-
-    
     <div class="app-card">
-        <img src="https://img.icons8.com/color/144/pubg.png" class="app-icon" alt="App Icon">
-        <div class="app-title">Mobile Global - Mod</div>
-        <span class="app-version">Version 3.1.0 Stable</span>
-        <p class="app-desc">High-performance stability optimization with advanced features for global users.</p>
-        <a href="رابط_التحميل_هنا" class="download-btn">Download Now</a>
+        <img src="https://traidmod.com/wp-content/uploads/2024/05/Free-Fire-Logo-240x240.webp" class="app-icon" alt="Free Fire">
+        <div class="app-title">Free Fire Mod</div>
+        <span class="app-version">V1.120.1 [MENU]</span>
+        <p class="app-desc">
+            قائمة الغش مجاناً. <br>
+            <span style="color: #ffb300; font-size: 11px;">⚠️ قد يؤدي للحظر، استخدم حساب تجريبي.</span>
+        </p>
+        <a href="https://s1.tmdownload.com/dl/Game/Free_Fire/Free_Fire_v1.120.1_Mod_[TraidMod.Net].apk" class="download-btn">Download Now</a>
     </div>
 
     <div class="app-card">
-        <img src="https://img.icons8.com/color/144/whatsapp.png" class="app-icon" alt="App Icon">
-        <div class="app-title">Messenger Pro Plus</div>
-        <span class="app-version">Version 10.45 Stable</span>
-        <p class="app-desc">Enhanced privacy features and extended media sharing capabilities.</p>
-        <a href="رابط_التحميل_هنا" class="download-btn">Download Now</a>
+        <img src="https://traidmod.com/wp-content/uploads/2024/06/Minecraft-Logo-240x240.webp" class="app-icon" alt="Minecraft">
+        <div class="app-title">Minecraft PE</div>
+        <span class="app-version">v1.26.10 [Mega Mod]</span>
+        <p class="app-desc">
+            🔓 سكنات مفتوحة | 🛡️ خلود <br>
+            🏗️ موارد غير محدودة | 🌍 أونلاين
+        </p>
+        <a href="رابط_التحميل" class="download-btn">Download PE</a>
     </div>
 
     <div class="app-card">
-        <img src="https://img.icons8.com/color/144/android-os.png" class="app-icon" alt="App Icon">
-        <div class="app-title">System Optimizer X</div>
-        <span class="app-version">Build 2026.1</span>
-        <p class="app-desc">Deep cleaning and RAM management for high-end gaming performance.</p>
-        <a href="رابط_التحميل_هنا" class="download-btn">Download Now</a>
-    </div>
-<div id="pagination" style="margin: 40px 0; display: flex; justify-content: center; gap: 10px; align-items: center;">
+        <img src="https://traidmod.com/wp-content/uploads/2024/01/Car-Simulator-2-Logo.webp" class="app-icon" alt="Car Sim">
+        <div class="app-title">Car Simulator 2 VIP</div>
+        <span class="app-version">v1.60.6 [Max Mod]</span>
+        <p class="app-desc">
+            💰 أموال لا نهائية | 🏎️ كل السيارات <br>
+            🚫 بدون إعلانات مزعجة
+        </p>
+        <a href="رابط_التحميل" class="download-btn">Download Now</a>
     </div>
 
-</div>
+    <div class="app-card">
+        <img src="https://img.icons8.com/color/144/pubg.png" class="app-icon" alt="PUBG">
+        <div class="app-title">PUBG Mobile Mod</div>
+        <span class="app-version">v3.1.0 Stable</span>
+        <p class="app-desc">High-performance stability optimization with advanced features.</p>
+        <a href="#" class="download-btn">Download Now</a>
+    </div>
+
+</div> ```
+
+
 <section style="max-width: 900px; margin: 50px auto; padding: 20px; border-top: 1px solid #2d334a;">
     <h2 style="color: var(--primary-color);">Why Choose Nexus Core?</h2>
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; font-size: 14px;">
