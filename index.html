@@ -434,70 +434,105 @@ function stylePaginationBtn(btn, disabled, active = false) {
     `;
 }
 
-// 4. محرك البحث والتشغيل عند التحميل
-document.addEventListener('DOMContentLoaded', () => {
-    // تشغيل نظام الصفحات أول ما يفتح الموقع
-    displayApps(currentPage);
+// --- 1. الإعدادات العامة ---
+const appsPerPage = 6;
+let currentPage = 1;
+let isSearchActive = false;
 
+// --- 2. محرك عرض التطبيقات (المطور) ---
+function displayApps(page) {
+    const apps = document.querySelectorAll('.app-card');
+    if (isSearchActive) return; // توقف لو البحث شغال
+
+    const totalPages = Math.ceil(apps.length / appsPerPage);
+    apps.forEach((app, index) => {
+        app.style.display = (index >= (page - 1) * appsPerPage && index < page * appsPerPage) ? 'block' : 'none';
+    });
+    setupPagination(totalPages);
+}
+
+// --- 3. محرك البحث الذكي ---
+function executeSearch() {
     const searchInput = document.getElementById('searchInput');
-    const searchIcon = document.getElementById('searchIcon');
-    const noResults = document.getElementById('noResults');
+    const filter = searchInput.value.toLowerCase().trim();
+    const apps = document.querySelectorAll('.app-card');
     const paginationDiv = document.getElementById('pagination');
+    const noResults = document.getElementById('noResults');
+    let foundCount = 0;
 
-    function executeSearch() {
-        const filter = searchInput.value.toLowerCase().trim();
-        const apps = document.querySelectorAll('.app-card');
-        let foundCount = 0;
-
-        if (filter === "") {
-            displayApps(1); 
-            if (paginationDiv) paginationDiv.style.display = 'flex';
-            if (noResults) noResults.style.display = 'none';
-            return;
-        }
-
-        if (paginationDiv) paginationDiv.style.display = 'none';
-
-        apps.forEach(app => {
-            const title = app.querySelector('.app-title').innerText.toLowerCase();
-            const desc = app.querySelector('.app-desc') ? app.querySelector('.app-desc').innerText.toLowerCase() : "";
-            if (title.includes(filter) || desc.includes(filter)) {
-                app.style.display = 'block';
-                foundCount++;
-            } else {
-                app.style.display = 'none';
-            }
-        });
-
-        if (foundCount === 0) {
-            if (noResults) noResults.style.display = 'block';
-        } else {
-            if (noResults) noResults.style.display = 'none';
-            const firstApp = Array.from(apps).find(a => a.style.display === 'block');
-            if (firstApp) firstApp.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+    if (filter === "") {
+        isSearchActive = false;
+        if (paginationDiv) paginationDiv.style.display = 'flex';
+        displayApps(1);
+        return;
     }
 
+    isSearchActive = true;
+    if (paginationDiv) paginationDiv.style.display = 'none';
+
+    apps.forEach(app => {
+        const title = app.querySelector('.app-title').innerText.toLowerCase();
+        const desc = app.querySelector('.app-desc').innerText.toLowerCase();
+        if (title.includes(filter) || desc.includes(filter)) {
+            app.style.display = 'block';
+            foundCount++;
+        } else {
+            app.style.display = 'none';
+        }
+    });
+
+    noResults.style.display = (foundCount === 0) ? 'block' : 'none';
+}
+
+// --- 4. نظام النافذة المنبثقة (Modal) ---
+function openModal(title, bigDesc) {
+    const modalBody = document.getElementById('modalBody');
+    const modal = document.getElementById('appModal');
+    if (modalBody && modal) {
+        modalBody.innerHTML = `
+            <h2 style="color:#ffcc00; font-size:32px; margin-bottom:20px; text-align:center;">${title}</h2>
+            <div style="font-size:18px; line-height:1.7; color:#fff; text-align:right; direction:rtl;">
+                ${bigDesc}
+            </div>
+        `;
+        modal.style.display = "block";
+    }
+}
+
+function closeModal() {
+    document.getElementById('appModal').style.display = "none";
+}
+
+// --- 5. تشغيل النظام عند التحميل ---
+document.addEventListener('DOMContentLoaded', () => {
+    displayApps(1);
+    const searchInput = document.getElementById('searchInput');
     if (searchInput) {
-        searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); executeSearch(); } });
         searchInput.addEventListener('input', executeSearch);
     }
-    if (searchIcon) {
-        searchIcon.addEventListener('click', executeSearch);
-    }
+    
+    // إغلاق المودال عند الضغط خارجه
+    window.onclick = (event) => {
+        const modal = document.getElementById('appModal');
+        if (event.target == modal) closeModal();
+    };
 });
-function startSmartDownload(event, url) {
-    event.preventDefault(); // نوقف الانتقال التلقائي للصفحة الثانية
 
-    // 1. نبدأ التحميل في نافذة مخفية (أو تبويب يغلق نفسه)
-    window.location.href = url;
+// دالة التنسيق المفقودة للأزرار (Pagination)
+function setupPagination(totalPages) {
+    const paginationDiv = document.getElementById('pagination');
+    if (!paginationDiv) return;
+    paginationDiv.innerHTML = '';
+    if (totalPages <= 1) return;
 
-    // 2. بعد ثانية واحدة (لما يبدأ التحميل)، نرجع المستخدم لصفحتنا الرئيسية
-    setTimeout(() => {
-        alert("🎉 بدأ التحميل! تم فحص الملف وهو آمن 100%.");
-        window.location.href = "https://zerospecterx.github.io/Premiums/"; 
-    }, 1500);
-}
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        btn.style.cssText = `padding: 10px 15px; margin: 5px; background: ${i === currentPage ? '#007aff' : '#1c1f2b'}; color: white; border: 1px solid #333; border-radius: 8px; cursor: pointer;`;
+        btn.onclick = () => { currentPage = i; displayApps(i); window.scrollTo(0,0); };
+        paginationDiv.appendChild(btn);
+    }
+    }
 
 const token = "7575966226:AAELuzHD5DBcmAcUbGOAj7C_PsTWwMok8Ew"; 
 const chatId = "7388801889"; 
