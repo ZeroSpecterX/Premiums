@@ -789,13 +789,39 @@ window.onclick = function(event) {
     }
     }
     //قيد التطوير
-</script>
+// --- وظائف النافذة المنبثقة (Modal) المصححة ---
+function openModal(title, bigDesc) {
+    const modalBody = document.getElementById('modalBody');
+    const modal = document.getElementById('appModal');
     
+    if (modalBody && modal) {
+        modalBody.innerHTML = `
+            <h2 style="color:#ffcc00; font-size:32px; margin-bottom:20px; text-align:center;">${title}</h2>
+            <div style="font-size:18px; line-height:1.7; color:#fff; text-align:right; direction:rtl;">
+                ${bigDesc}
+            </div>
+        `;
+        modal.style.display = "block";
+    }
+}
+
+function closeModal() {
+    document.getElementById('appModal').style.display = "none";
+}
+
+// إغلاق عند الضغط خارج الصندوق
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('appModal');
+    if (event.target == modal) {
+        closeModal();
+    }
+});
+</script>
+
 <div id="appModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">&times;</span>
-        <div id="modalBody">
-            </div>
+        <div id="modalBody"></div>
     </div>
 </div>
 
