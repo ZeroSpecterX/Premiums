@@ -15,33 +15,38 @@
     <p>Premium Software Distribution</p>
 </header>
 
-<div class="search-wrapper">
-    <input type="text" id="searchInput" placeholder="ابحث هنا...">
+<div class="search-wrapper" style="max-width: 90%; margin: 0 auto;">
+    <input type="text" id="searchInput" placeholder="ابحث عن العاب او تطبيقات..." 
+           style="width: 100%; box-sizing: border-box; padding: 12px; border-radius: 12px; border: 1px solid #333; background: #1a1a1a; color: white;">
 </div>
 
-<div class="container">
-    <div class="app-card featured" onclick="openModal('Instagram Pro', 'مميزات النخبة كاملة')">
+<div id="noResults" style="display: none; text-align: center; margin: 50px 0; color: #ff4545; font-weight: bold;">
+    <p>⚠️ التطبيق غير موجود حالياً.. يتم التطوير لتوفيره 🛠️</p>
+</div>
+
+<div class="container" id="appGrid">
+    <div class="app-card featured" onclick="openModal('Instagram Pro 2026', 'نسخة النخبة: تحميل ستوري، إخفاء الظهور، بدون إعلانات نهائياً.')">
         <img src="https://traidmode.com/wp-content/uploads/2025/10/v-1-32-180x180.webp" class="app-icon">
         <div class="app-title">انستقرام برو 2026</div>
         <span class="app-version">V14.25 [VIP]</span>
         <a href="#" class="download-btn">تحميل VIP</a>
     </div>
 
-    <div class="app-card" onclick="openModal('Free Fire Mod', 'قائمة مود كاملة')">
+    <div class="app-card" onclick="openModal('Free Fire Mod', 'قائمة غش مجانية - يرجى استخدامه بحذر.')">
         <img src="https://traidmod.com/wp-content/uploads/2024/05/Free-Fire-Logo-240x240.webp" class="app-icon">
         <div class="app-title">مود فري فاير</div>
         <span class="app-version">V1.120.1</span>
         <a href="#" class="download-btn">تحميل الآن</a>
     </div>
 
-    <div class="app-card" onclick="openModal('Minecraft PE', 'سكنات مفتوحة')">
+    <div class="app-card" onclick="openModal('Minecraft PE', 'سكنات مفتوحة وخلود وموارد غير محدودة.')">
         <img src="https://traidmod.com/wp-content/uploads/2024/06/Minecraft-Logo-240x240.webp" class="app-icon">
         <div class="app-title">ماين كرافت PE</div>
         <span class="app-version">v1.26.10</span>
         <a href="#" class="download-btn">تحميل PE</a>
     </div>
 
-    <div class="app-card" onclick="openModal('Car Simulator 2', 'أموال غير محدودة')">
+    <div class="app-card" onclick="openModal('Car Simulator 2', 'أموال لا نهائية وفتح جميع السيارات.')">
         <img src="https://traidmod.com/wp-content/uploads/2024/01/Car-Simulator-2-Logo.webp" class="app-icon">
         <div class="app-title">محاكي السيارات 2</div>
         <span class="app-version">v1.60.6</span>
@@ -49,15 +54,52 @@
     </div>
 </div>
 
+<section style="max-width: 900px; margin: 40px auto; padding: 20px; border-top: 1px solid #2d334a;">
+    <div style="background: #11131a; padding: 20px; border-radius: 20px; border-right: 5px solid #007aff; text-align: right;">
+        <h3 style="margin-top: 0; color: #007aff;">About the Developer</h3>
+        <p>Developed by <strong>ZeroX</strong>, a Cyber Security Enthusiast and Full-Stack Developer dedicated to providing premium software solutions and penetration testing tools.</p>
+        <p>📧 Contact: <a href="mailto:zerospectrex1@gmail.com" style="color: #007aff;">zerospectrex1@gmail.com</a></p>
+    </div>
+</section>
+
+<div style="font-size: 14px; color: #777; margin: 20px; text-align: center; padding: 20px; line-height: 1.6;">
+    <p><strong>Privacy Policy & Disclaimer:</strong> Nexus Core values your privacy. We only collect basic system information to ensure app compatibility. These tools are for educational and testing purposes only. ZeroX is not responsible for any misuse.</p>
+</div>
+
+<footer>
+    &copy; 2026 Nexus Core. All rights reserved. <br>
+    Distributed by ZeroX premiums
+</footer>
+
 <div id="appModal" class="modal">
     <div class="modal-content">
-        <h2 id="mTitle"></h2>
-        <p id="mDesc"></p>
-        <button onclick="closeModal()" style="width:100%; padding:10px; border-radius:10px; border:none; background:#007aff; color:white;">إغلاق</button>
+        <h2 id="mTitle" style="color: #ffcc00;"></h2>
+        <p id="mDesc" style="line-height: 1.6;"></p>
+        <button onclick="closeModal()" style="width:100%; padding:12px; border-radius:12px; border:none; background:#007aff; color:white; font-weight:bold; cursor:pointer;">فهمت</button>
     </div>
 </div>
 
 <script>
+    // نظام البحث المطور لإظهار رسالة "يتم التطوير"
+    document.getElementById('searchInput').addEventListener('input', function() {
+        let val = this.value.toLowerCase().trim();
+        let cards = document.querySelectorAll('.app-card');
+        let noResults = document.getElementById('noResults');
+        let found = false;
+
+        cards.forEach(card => {
+            let title = card.querySelector('.app-title').innerText.toLowerCase();
+            if (title.includes(val)) {
+                card.style.display = 'flex';
+                found = true;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        noResults.style.display = found ? 'none' : 'block';
+    });
+
     function openModal(t, d) {
         document.getElementById('mTitle').innerText = t;
         document.getElementById('mDesc').innerText = d;
@@ -66,17 +108,13 @@
     function closeModal() {
         document.getElementById('appModal').style.display = 'none';
     }
-    // كود البحث البسيط
-    document.getElementById('searchInput').oninput = function() {
-        let val = this.value.toLowerCase();
-        document.querySelectorAll('.app-card').forEach(card => {
-            let title = card.querySelector('.app-title').innerText.toLowerCase();
-            card.style.display = title.includes(val) ? 'flex' : 'none';
-        });
-    };
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('appModal')) closeModal();
+    }
 </script>
 
 </body>
+
 
 
 </html>
