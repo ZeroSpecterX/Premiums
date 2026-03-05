@@ -764,7 +764,30 @@ window.onclick = function(event) {
     if (event.target == modal) { closeModal(); }
 }
 
+function openModal(title, bigDesc) {
+    // هذا السطر يبحث عن مكان الوصف ويحط فيه الكلام اللي كتبناه
+    document.getElementById('modalBody').innerHTML = `
+        <h2 style="color:#ffcc00; font-size:32px; margin-bottom:20px;">${title}</h2>
+        <div style="font-size:18px; line-height:1.7; color:#fff; text-align:right; direction:rtl;">
+            ${bigDesc}
+        </div>
+    `;
+    // هذا السطر يظهر النافذة
+    document.getElementById('appModal').style.display = "block";
+}
 
+function closeModal() {
+    // هذا السطر يخفي النافذة
+    document.getElementById('appModal').style.display = "none";
+}
+
+// قفل النافذة لو ضغطت في أي مكان برا الصندوق
+window.onclick = function(event) {
+    var modal = document.getElementById('appModal');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    }
     //قيد التطوير
 </script>
     
