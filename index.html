@@ -147,11 +147,13 @@
 
     /* 6. أزرار التحميل والبحث */
     .download-btn {
-        width: 100%;
+        width: auto; /* بدل 100% عشان ما يمتط */
+        min-width: 200px; /* أقل عرض عشان يحافظ على هيبته */
+        align-self: center; /* يضعه في المنتصف بالضبط */
         background: var(--primary-gradient);
         color: white;
         text-decoration: none;
-        padding: 22px 0;
+        padding: 18px 45px; /* زدنا العرض الجانبي */
         border-radius: 18px;
         font-weight: 700;
         font-size: 22px;
